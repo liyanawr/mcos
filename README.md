@@ -1,6 +1,6 @@
 # 🍔 MCOS - Melati Chillz Ordering System
 
-MCOS is a professional, full-stack PHP web application designed to streamline restaurant operations. It features a dual-interface system: a high-conversion ordering platform for **Customers** and a robust administrative dashboard for **Staff** and **Admins**.
+MCOS is a full-stack PHP web application designed to streamline restaurant operations. It features a dual-interface system: a high-conversion ordering platform for **Customers** and a robust administrative dashboard for **Staff** and **Admins**. NAHH THIS IS JUST TO PASS ICT502 LESGO
 
 ## Prerequisites
 
@@ -64,4 +64,7 @@ Move the folder to your local server directory (e.g., `C:\xampp\htdocs\mcos`).
 4. **Run**:
 Visit `http://localhost/mcos/` in your browser.
 
-
+# Adjustments to be made: 
+- error handling
+- session (logout macam tak betul)
+- database (data and images/illustrations)
