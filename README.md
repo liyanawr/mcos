@@ -16,15 +16,15 @@ Before you begin, ensure you have met the following requirements to run the envi
 
 ---
 
-## 🚀 Key Features
+## UI
 
-### 👤 Customer Interface
+### Customer Interface
 
 * **Smart Menu**: Search for dishes and filter by category.
 * **Order Tracking**: Real-time status updates for orders (Pending, On Delivery, Delivered).
 * **User Profile**: Personal dashboard to manage contact details, dorm addresses, and bank information for payment verification.
 
-### 👔 Admin & Staff Dashboard
+### Admin & Staff Dashboard
 
 * **Advanced Analytics**: Track Sales (Monthly/Yearly), view the top 2 best-selling items with images, and read live customer feedback.
 * **Inventory Management**: Full CRUD support for food categories and menu items with image processing.
@@ -38,16 +38,7 @@ Before you begin, ensure you have met the following requirements to run the envi
 
 ---
 
-## 🛠️ Tech Stack
-
-* **Backend**: PHP 8.x
-* **Database**: MySQL
-* **Frontend**: HTML5, CSS3 (Modern Flexbox/Card-based UI), Bootstrap
-* **Security**: SQL Injection prevention using `mysqli_real_escape_string`.
-
----
-
-## 📂 Database Schema
+## MCOS Database
 
 The system utilizes a relational schema including the following primary tables:
 
@@ -55,7 +46,7 @@ The system utilizes a relational schema including the following primary tables:
 
 ---
 
-## 📦 Installation
+## Installation
 
 1. **Clone the Repo**:
 ```bash
@@ -75,12 +66,4 @@ Move the folder to your local server directory (e.g., `C:\xampp\htdocs\mcos`).
 4. **Run**:
 Visit `http://localhost/mcos/` in your browser.
 
----
 
-## 📝 License
-
-Distributed under the MIT License.
-
----
-
-**Would you like me to help you create a `.gitignore` file so you don't accidentally upload your database password or XAMPP temporary files?**
