@@ -1,15 +1,10 @@
 # mcos
-Melati Chillz Ordering System
 
-Here is the comprehensive, professional **README.md** for your GitHub repository. It includes the pre-installation requirements, the unique database features we implemented, and clear setup instructions.
+# 🍔 MCOS - Melati Chillz Ordering System
 
----
+MCOS is a professional, full-stack PHP web application designed to streamline restaurant operations. It features a dual-interface system: a high-conversion ordering platform for **Customers** and a robust administrative dashboard for **Staff** and **Admins**.
 
-# 🍔 Foodhub - Restaurant Management & Ordering System
-
-Foodhub is a professional, full-stack PHP web application designed to streamline restaurant operations. It features a dual-interface system: a high-conversion ordering platform for **Customers** and a robust administrative dashboard for **Staff** and **Admins**.
-
-## 📋 Prerequisites
+## Prerequisites
 
 Before you begin, ensure you have met the following requirements to run the environment locally:
 
@@ -64,7 +59,7 @@ The system utilizes a relational schema including the following primary tables:
 
 1. **Clone the Repo**:
 ```bash
-git clone https://github.com/your-username/food-order.git
+git clone https://github.com/liyanawr/mcos.git
 
 ```
 
