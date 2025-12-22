@@ -66,7 +66,8 @@ git clone https://github.com/liyanawr/mcos.git
 3. **Run**:
 Visit `http://localhost/mcos/` in your browser.
 
-# Adjustments to be made: 
-- error handling
-- session (logout macam tak betul)
+# Latest update/issue (current date: 12/12/2025)
+- major update to customer pages
+- customer ada cart (add cart to database)
+- kena tengok balik admin/staff pages
 - database (data and images/illustrations)
