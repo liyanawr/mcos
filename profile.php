@@ -15,8 +15,7 @@ $sql = "SELECT * FROM CUSTOMER WHERE cust_ID = $cust_id";
 $res = mysqli_query($conn, $sql);
 $row = mysqli_fetch_assoc($res);
 
-// 2. Fetch Recent Orders from ORDER table (matches your SQL schema)
-// Note: `ORDER` is a reserved keyword in SQL, so we use backticks
+// 2. Fetch Recent Orders from ORDER table
 $sql_orders = "SELECT * FROM `ORDER` WHERE cust_ID = $cust_id ORDER BY order_date DESC LIMIT 5";
 $res_orders = mysqli_query($conn, $sql_orders);
 
@@ -39,7 +38,7 @@ if(isset($_POST['update_cust'])) {
         WHERE cust_ID=$cust_id";
 
     if(mysqli_query($conn, $sql_up)) {
-        $_SESSION['msg'] = "<div style='color: #2ecc71; padding: 10px; text-align:center;'>Profile Updated Successfully.</div>";
+        $_SESSION['msg'] = "<div style='color: #2ecc71; padding: 10px; text-align:center; font-weight:bold;'>Profile Updated Successfully.</div>";
         header("location: profile.php");
         exit();
     }
@@ -56,14 +55,14 @@ if(isset($_POST['update_cust'])) {
             <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid #57606f; padding-bottom: 20px; margin-bottom: 25px;">
                 <div>
                     <h3 style="color: #ff4757; margin-top: 0;">Account Information</h3>
-                    <p style="margin: 10px 0;"><strong>Membership:</strong> <span style="background:#2ecc71; color:white; padding: 4px 12px; border-radius: 20px; font-size: 0.85rem;">Active Customer</span></p>
+                    <p style="margin: 10px 0;"><strong>Account Type:</strong> Customer Account</p>
                     <p style="margin: 5px 0;"><strong>Username:</strong> <?php echo $row['cust_username']; ?></p>
                     <p style="margin: 5px 0;"><strong>Customer ID:</strong> #<?php echo $cust_id; ?></p>
                 </div>
                 <div style="text-align: right;">
                     <h3 style="color: #ff4757; margin-top: 0;">Contact Details</h3>
                     <p style="margin: 5px 0;"><strong>Phone:</strong> <?php echo $row['cust_contact_no'] ? $row['cust_contact_no'] : 'Not set'; ?></p>
-                    <p style="margin: 5px 0;"><strong>Address/Dorm:</strong> <?php echo $row['cust_dorm']; ?></p>
+                    <p style="margin: 5px 0;"><strong>Address/Dorm:</strong> <?php echo $row['cust_dorm'] ? $row['cust_dorm'] : 'Not set'; ?></p>
                 </div>
             </div>
 
