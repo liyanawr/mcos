@@ -1,48 +1,85 @@
-<?php include('partials/menu.php'); ?>
+<?php 
+ob_start();
+include('partials/menu.php'); 
+?>
 
-<div class="main-content">
-    <div class="wrapper">
-        <h1>Add Category</h1>
-        <br><br>
+<div class="main-content" style="background-color: #f1f2f6; padding: 3% 0;">
+    <div class="wrapper" style="max-width: 600px; margin: 0 auto; background: white; padding: 40px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+        <h1 class="text-center" style="color: #2f3542; margin-bottom: 30px;">Add New Category</h1>
+
+        <?php 
+            if(isset($_SESSION['add'])) {
+                echo $_SESSION['add'];
+                unset($_SESSION['add']);
+            }
+
+            if(isset($_SESSION['upload'])) {
+                echo $_SESSION['upload'];
+                unset($_SESSION['upload']);
+            }
+        ?>
 
         <form action="" method="POST" enctype="multipart/form-data">
-            <table class="tbl-30">
-                <tr>
-                    <td>Category Title: </td>
-                    <td><input type="text" name="details" placeholder="Category Title" required></td>
-                </tr>
-                <tr>
-                    <td>Select Image: </td>
-                    <td><input type="file" name="image"></td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        <input type="submit" name="submit" value="Add Category" class="btn-secondary">
-                    </td>
-                </tr>
-            </table>
+            <div style="margin-bottom: 20px;">
+                <label style="display:block; margin-bottom:8px; font-weight: bold;">Category Title (Details)</label>
+                <input type="text" name="details" placeholder="e.g. Beverages, Main Course" style="width:100%; padding:12px; border-radius:8px; border:1px solid #ddd;" required>
+            </div>
+
+            <div style="margin-bottom: 30px;">
+                <label style="display:block; margin-bottom:8px; font-weight: bold;">Category Image</label>
+                <input type="file" name="image" style="width:100%;">
+                <p style="font-size: 0.8rem; color: #a4b0be; margin-top: 5px;">Recommended size: 400x400px (JPG/PNG)</p>
+            </div>
+
+            <input type="submit" name="submit" value="Create Category" style="width: 100%; background: #2f3542; color: white; border: none; padding: 15px; border-radius: 8px; font-weight: bold; cursor: pointer;">
+            
+            <div class="text-center" style="margin-top: 15px;">
+                <a href="manage-category.php" style="color: #747d8c; text-decoration: none;">Cancel</a>
+            </div>
         </form>
 
         <?php 
             if(isset($_POST['submit'])) {
-                $details = $_POST['details'];
+                // 1. Get data from Form
+                $details = mysqli_real_escape_string($conn, $_POST['details']);
 
+                // 2. Handle Image Upload
                 if(isset($_FILES['image']['name']) && $_FILES['image']['name'] != "") {
-                    $temp = explode('.', $_FILES['image']['name']);
-                    $ext = end($temp);
-                    $image_name = "Category_".rand(000, 999).'.'.$ext;
+                    // Get the extension
+                    $ext = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
+                    
+                    // Rename the Image
+                    $image_name = "Food_Category_".rand(000, 999).'.'.$ext;
+
                     $source_path = $_FILES['image']['tmp_name'];
                     $destination_path = "../images/category/".$image_name;
 
-                    if(!is_dir('../images/category/')) mkdir('../images/category/', 0777, true);
-                    move_uploaded_file($source_path, $destination_path);
+                    // Upload the Image
+                    $upload = move_uploaded_file($source_path, $destination_path);
+
+                    if($upload == false) {
+                        $_SESSION['upload'] = "<div class='error text-center'>Failed to upload image.</div>";
+                        header('location:'.SITEURL.'admin/add-category.php');
+                        exit();
+                    }
                 } else {
                     $image_name = "";
                 }
 
-                $sql = "INSERT INTO category (category_details, category_pict) VALUES ('$details', '$image_name')";
-                if(mysqli_query($conn, $sql)) {
+                // 3. Insert into Database using your schema columns: category_details, category_pict
+                $sql = "INSERT INTO category (category_details, category_pict) 
+                        VALUES ('$details', '$image_name')";
+                
+                $res = mysqli_query($conn, $sql);
+
+                if($res == true) {
+                    $_SESSION['add'] = "<div class='success text-center'>Category added successfully.</div>";
                     header('location:'.SITEURL.'admin/manage-category.php');
+                    exit();
+                } else {
+                    $_SESSION['add'] = "<div class='error text-center'>Failed to add category.</div>";
+                    header('location:'.SITEURL.'admin/add-category.php');
+                    exit();
                 }
             }
         ?>
