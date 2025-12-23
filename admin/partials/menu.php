@@ -3,7 +3,7 @@
 
     // 1. Authorization: Strict check for Staff role
     if(!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'staff') {
-        header('location:'.SITEURL.'login.php'); // Redirect to main login
+        header('location:'.SITEURL.'login.php'); 
         exit;
     }
 
@@ -12,7 +12,6 @@
 
     // 3. Prevent browser caching
     header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
-    header("Cache-Control: post-check=0, pre-check=0", false);
     header("Pragma: no-cache");
 ?>
 
@@ -25,22 +24,67 @@
     <link rel="icon" type="image/png" href="../images/mcoslogo.png">
     <link rel="stylesheet" href="../css/style.css">
     <style>
-        .wrapper { width: 90%; max-width: 1300px; margin: 0 auto; padding: 2% 0; }
+        /* Centering the content away from screen borders */
+        .wrapper { 
+            width: 85%; 
+            max-width: 1100px; 
+            margin: 0 auto; 
+            padding: 0 20px; 
+        }
+        
         .navbar { background: white; border-bottom: 2px solid #f1f2f6; }
-        .menu ul { list-style: none; display: flex; gap: 20px; padding: 0; margin: 0; }
-        .menu ul li a { color: #2f3542; font-weight: bold; text-decoration: none; transition: 0.3s; font-size: 0.9rem;}
+        .navbar .wrapper {
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 15px 0;
+        }
+
+        .menu ul { list-style: none; display: flex; gap: 25px; padding: 0; margin: 0; }
+        .menu ul li a { 
+            color: #2f3542; 
+            font-weight: bold; 
+            text-decoration: none; 
+            transition: 0.3s; 
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
         .menu ul li a:hover { color: #ff4757; }
-        .btn-action { padding: 5px 10px; border-radius: 4px; color: white; text-decoration: none; font-size: 0.8rem; }
-        .table-admin { width: 100%; border-collapse: collapse; background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-        .table-admin th { background: #2f3542; color: white; padding: 15px; text-align: left; }
-        .table-admin td { padding: 15px; border-bottom: 1px solid #f1f2f6; }
+        .logout-btn { color: #ff4757 !important; }
+
+        /* BUTTON FIX: Real button UI instead of highlights */
+        .btn-action { 
+            padding: 8px 16px; 
+            border-radius: 6px; 
+            color: white !important; 
+            text-decoration: none; 
+            font-size: 0.8rem; 
+            font-weight: bold;
+            display: inline-block; 
+            transition: 0.3s;
+            border: none;
+            cursor: pointer;
+            text-align: center;
+        }
+        .btn-action:hover {
+            opacity: 0.85;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transform: translateY(-1px);
+        }
+        .btn-update { background-color: #3498db; }
+        .btn-delete { background-color: #e74c3c; }
+
+        /* Table Styling */
+        .table-admin { width: 100%; border-collapse: collapse; background: white; border-radius: 10px; overflow: hidden; }
+        .table-admin th { background: rgba(255,255,255,0.1); color: white; padding: 15px; text-align: left; }
+        .table-admin td { padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); }
     </style>
 </head>
 <body>
     <section class="navbar">
-        <div class="wrapper" style="display: flex; justify-content: space-between; align-items: center; padding: 10px 0;">
+        <div class="wrapper">
             <div class="logo">
-                <a href="index.php"><img src="../images/mcoslogo.png" style="width: 80px;"></a>
+                <a href="index.php"><img src="../images/mcoslogo.png" style="width: 75px;"></a>
             </div>
             <div class="menu">
                 <ul>
@@ -50,8 +94,9 @@
                     <li><a href="manage-category.php">Categories</a></li>
                     <li><a href="manage-food.php">Menu</a></li>
                     <li><a href="manage-order.php">Orders</a></li>
+                    <li><a href="manage-feedback.php">Feedback</a></li>
                     <li><a href="manage-profile.php">Profile</a></li>
-                    <li><a href="../logout.php" style="color: #ff4757;">Logout</a></li>
+                    <li><a href="../logout.php" class="logout-btn">Logout</a></li>
                 </ul>
             </div>
         </div>
