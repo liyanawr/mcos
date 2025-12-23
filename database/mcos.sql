@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 19, 2025 at 07:38 PM
+-- Generation Time: Dec 23, 2025 at 07:49 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,6 +20,19 @@ SET time_zone = "+00:00";
 --
 -- Database: `mcos`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cart`
+--
+
+CREATE TABLE `cart` (
+  `cart_ID` int(11) NOT NULL,
+  `cust_ID` int(11) DEFAULT NULL,
+  `menu_ID` int(11) DEFAULT NULL,
+  `quantity` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -88,10 +101,15 @@ CREATE TABLE `delivery` (
 
 INSERT INTO `delivery` (`delivery_ID`, `delivery_time`, `delivery_date`, `delivery_status`, `order_ID`, `staff_ID`) VALUES
 (1, '12:30:00', '2023-10-27', 'Delivered', 1, 2),
-(2, NULL, NULL, 'On Delivery', 8, NULL),
+(2, NULL, NULL, 'Delivered', 8, NULL),
 (3, NULL, NULL, 'Delivered', 5, NULL),
 (4, NULL, NULL, 'Delivered', 3, NULL),
-(5, NULL, NULL, 'Delivered', 2, NULL);
+(5, NULL, NULL, 'Delivered', 2, NULL),
+(6, NULL, NULL, 'Delivered', 4, NULL),
+(7, NULL, NULL, 'Delivered', 6, NULL),
+(8, NULL, NULL, 'Delivered', 7, NULL),
+(9, NULL, NULL, 'Delivered', 9, NULL),
+(10, NULL, NULL, 'On Delivery', 10, NULL);
 
 -- --------------------------------------------------------
 
@@ -104,16 +122,22 @@ CREATE TABLE `feedback` (
   `feedback` text DEFAULT NULL,
   `created_at` datetime DEFAULT current_timestamp(),
   `cust_ID` int(11) DEFAULT NULL,
-  `feedback_cat_ID` int(11) DEFAULT NULL
+  `order_ID` int(11) DEFAULT NULL,
+  `feedback_cat_ID` int(11) DEFAULT NULL,
+  `menu_ID` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `feedback`
 --
 
-INSERT INTO `feedback` (`feedback_ID`, `feedback`, `created_at`, `cust_ID`, `feedback_cat_ID`) VALUES
-(1, 'It was nice. Highly recommended!', '2025-12-19 21:48:22', 1, 1),
-(2, 'It was nice. Highly recommended!', '2025-12-19 21:48:53', 1, 1);
+INSERT INTO `feedback` (`feedback_ID`, `feedback`, `created_at`, `cust_ID`, `order_ID`, `feedback_cat_ID`, `menu_ID`) VALUES
+(1, 'It was nice. Highly recommended!', '2025-12-19 21:48:22', 1, 1, 1, 2),
+(2, 'It was nice. Highly recommended!', '2025-12-19 21:48:53', 1, 2, 1, 1),
+(3, 'sikmok sedap', '2025-12-22 23:50:39', 1, 6, 1, 1),
+(4, 'hantar laju sikit lagi boleh ke hehe tapi kaw dah teh ais nya tqtq', '2025-12-22 23:51:35', 1, 5, 2, 2),
+(5, 'loading lama kat page categories tadi', '2025-12-23 00:14:34', 1, 11, 3, NULL),
+(6, 'pedas bey sambal tu... mak suka la', '2025-12-23 00:20:42', 1, 9, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -204,7 +228,11 @@ INSERT INTO `order` (`order_ID`, `order_date`, `delivery_charge`, `grand_total`,
 (5, '2025-12-19 22:12:23', 2.00, 4.00, 1, 2),
 (6, '2025-12-19 22:12:50', 2.00, 7.50, 1, 2),
 (7, '2025-12-19 22:14:22', 2.00, 4.00, 1, 2),
-(8, '2025-12-19 22:19:57', 2.00, 4.00, 1, 2);
+(8, '2025-12-19 22:19:57', 2.00, 4.00, 1, 2),
+(9, '2025-12-21 15:25:13', 2.00, 7.50, 1, 2),
+(10, '2025-12-22 23:27:03', 2.00, 7.50, 1, 2),
+(11, '2025-12-22 23:41:36', 2.00, 17.00, 1, 2),
+(12, '2025-12-23 00:23:32', 2.00, 11.50, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -232,7 +260,13 @@ INSERT INTO `order_menu` (`order_ID`, `menu_ID`, `order_quantity`, `sub_total`) 
 (5, 2, 1, 2.00),
 (6, 1, 1, 5.50),
 (7, 2, 1, 2.00),
-(8, 2, 1, 2.00);
+(8, 2, 1, 2.00),
+(9, 1, 1, 5.50),
+(10, 1, 1, 5.50),
+(11, 1, 2, 11.00),
+(11, 2, 2, 4.00),
+(12, 1, 1, 5.50),
+(12, 2, 2, 4.00);
 
 -- --------------------------------------------------------
 
@@ -274,11 +308,17 @@ CREATE TABLE `payment` (
 
 INSERT INTO `payment` (`payment_ID`, `amount_paid`, `payment_method`, `payment_status`, `payment_date`, `receipt_file`, `order_ID`) VALUES
 (1, 13.00, 'E-Wallet', 'Completed', '2025-12-19 18:03:13', NULL, 1),
-(2, 4.00, 'Maybank', 'Pending', '2025-12-19 22:18:06', 'Receipt-Order-7-615.png', 7),
+(2, 4.00, 'Maybank', 'Verified', '2025-12-19 22:18:06', 'Receipt-Order-7-615.png', 7),
 (3, 0.00, NULL, 'Verified', '2025-12-20 01:11:53', NULL, 8),
 (4, 0.00, NULL, 'Verified', '2025-12-20 01:12:42', NULL, 5),
 (5, 0.00, NULL, 'Verified', '2025-12-20 01:12:50', NULL, 3),
-(6, 0.00, NULL, 'Verified', '2025-12-20 01:12:58', NULL, 2);
+(6, 0.00, NULL, 'Verified', '2025-12-20 01:12:58', NULL, 2),
+(7, 7.50, 'Maybank', 'Verified', '2025-12-21 15:25:13', 'Receipt-1766301913-61.png', 9),
+(8, 7.50, 'Maybank', 'Verified', '2025-12-22 23:27:03', 'Receipt-1766417223-129.png', 10),
+(9, 17.00, 'CIMB Bank', 'Pending Verification', '2025-12-22 23:41:36', 'Receipt-1766418096-470.png', 11),
+(10, 11.50, 'Maybank', 'Pending Verification', '2025-12-23 00:23:32', 'Receipt-1766420612-868.png', 12),
+(11, 0.00, NULL, 'Verified', '2025-12-23 00:35:01', NULL, 4),
+(12, 0.00, NULL, 'Pending', '2025-12-23 00:35:07', NULL, 6);
 
 -- --------------------------------------------------------
 
@@ -330,6 +370,14 @@ INSERT INTO `work_log` (`log_ID`, `work_date`, `hours_worked`, `day_present`, `s
 --
 
 --
+-- Indexes for table `cart`
+--
+ALTER TABLE `cart`
+  ADD PRIMARY KEY (`cart_ID`),
+  ADD KEY `cust_ID` (`cust_ID`),
+  ADD KEY `menu_ID` (`menu_ID`);
+
+--
 -- Indexes for table `category`
 --
 ALTER TABLE `category`
@@ -356,7 +404,9 @@ ALTER TABLE `delivery`
 ALTER TABLE `feedback`
   ADD PRIMARY KEY (`feedback_ID`),
   ADD KEY `cust_ID` (`cust_ID`),
-  ADD KEY `feedback_cat_ID` (`feedback_cat_ID`);
+  ADD KEY `feedback_cat_ID` (`feedback_cat_ID`),
+  ADD KEY `fk_feedback_menu` (`menu_ID`),
+  ADD KEY `fk_feedback_order` (`order_ID`);
 
 --
 -- Indexes for table `feedback_category`
@@ -425,6 +475,12 @@ ALTER TABLE `work_log`
 --
 
 --
+-- AUTO_INCREMENT for table `cart`
+--
+ALTER TABLE `cart`
+  MODIFY `cart_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
@@ -440,13 +496,13 @@ ALTER TABLE `customer`
 -- AUTO_INCREMENT for table `delivery`
 --
 ALTER TABLE `delivery`
-  MODIFY `delivery_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `delivery_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `feedback`
 --
 ALTER TABLE `feedback`
-  MODIFY `feedback_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `feedback_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `feedback_category`
@@ -464,13 +520,13 @@ ALTER TABLE `menu`
 -- AUTO_INCREMENT for table `order`
 --
 ALTER TABLE `order`
-  MODIFY `order_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `order_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `payment`
 --
 ALTER TABLE `payment`
-  MODIFY `payment_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `payment_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `staff`
@@ -489,6 +545,13 @@ ALTER TABLE `work_log`
 --
 
 --
+-- Constraints for table `cart`
+--
+ALTER TABLE `cart`
+  ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`cust_ID`) REFERENCES `customer` (`cust_ID`) ON DELETE CASCADE,
+  ADD CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`menu_ID`) REFERENCES `menu` (`menu_ID`) ON DELETE CASCADE;
+
+--
 -- Constraints for table `delivery`
 --
 ALTER TABLE `delivery`
@@ -500,7 +563,9 @@ ALTER TABLE `delivery`
 --
 ALTER TABLE `feedback`
   ADD CONSTRAINT `feedback_ibfk_1` FOREIGN KEY (`cust_ID`) REFERENCES `customer` (`cust_ID`),
-  ADD CONSTRAINT `feedback_ibfk_2` FOREIGN KEY (`feedback_cat_ID`) REFERENCES `feedback_category` (`feedback_cat_ID`);
+  ADD CONSTRAINT `feedback_ibfk_2` FOREIGN KEY (`feedback_cat_ID`) REFERENCES `feedback_category` (`feedback_cat_ID`),
+  ADD CONSTRAINT `fk_feedback_menu` FOREIGN KEY (`menu_ID`) REFERENCES `menu` (`menu_ID`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_feedback_order` FOREIGN KEY (`order_ID`) REFERENCES `order` (`order_ID`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `full_time`
