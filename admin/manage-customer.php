@@ -1,57 +1,58 @@
 <?php include('partials/menu.php'); ?>
 
-<div class="main-content">
+<div class="main-content" style="background-color: #f1f2f6; padding: 3% 0;">
     <div class="wrapper">
-        <h1 class="text-center">Manage Customers</h1>
-        <br /><br />
+        <h1 class="text-center" style="margin-bottom: 30px; color: #2f3542;">Manage Customers</h1>
 
-        <table class="table-full" style="width: 100%; border-collapse: collapse;">
-            <thead>
-                <tr style="border-bottom: 2px solid #f1f2f6; text-align: left;">
-                    <th style="padding: 10px;">No</th>
-                    <th style="padding: 10px;">Full Name</th>
-                    <th style="padding: 10px;">Dorm</th>
-                    <th style="padding: 10px;">Contact</th>
-                    <th style="padding: 10px;">Bank Info</th>
-                    <th style="padding: 10px;">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php 
-                    $sql = "SELECT * FROM CUSTOMER";
-                    $res = mysqli_query($conn, $sql);
-
-                    if($res == TRUE) {
-                        $count = mysqli_num_rows($res);
+        <div style="background: #2f3542; color: white; padding: 25px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+            <table style="width: 100%; border-collapse: collapse; background: rgba(255,255,255,0.05); border-radius: 10px; overflow: hidden;">
+                <thead>
+                    <tr style="background: rgba(255,255,255,0.1); text-align: left;">
+                        <th style="padding: 15px;">No.</th>
+                        <th style="padding: 15px;">Full Name</th>
+                        <th style="padding: 15px;">Dorm/Address</th>
+                        <th style="padding: 15px;">Contact</th>
+                        <th style="padding: 15px;">Bank Details</th>
+                        <th style="padding: 15px;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php 
+                        $sql = "SELECT * FROM CUSTOMER";
+                        $res = mysqli_query($conn, $sql);
                         $sn = 1;
 
-                        if($count > 0) {
+                        if(mysqli_num_rows($res) > 0) {
                             while($rows = mysqli_fetch_assoc($res)) {
                                 $id = $rows['cust_ID'];
                                 $full_name = $rows['cust_first_name']." ".$rows['cust_last_name'];
-                                $dorm = $rows['cust_dorm'];
-                                $contact = $rows['cust_contact_no'];
-                                $bank = $rows['bank_name']." (".$rows['bank_account'].")";
-                                ?>
-                                <tr style="border-bottom: 1px solid #f1f2f6;">
-                                    <td style="padding: 10px;"><?php echo $sn++; ?>. </td>
-                                    <td style="padding: 10px;"><?php echo $full_name; ?></td>
-                                    <td style="padding: 10px;"><?php echo $dorm; ?></td>
-                                    <td style="padding: 10px;"><?php echo $contact; ?></td>
-                                    <td style="padding: 10px; font-size: 0.85rem; color: #7f8c8d;"><?php echo $bank; ?></td>
-                                    <td style="padding: 10px;">
-                                        <a href="delete-customer.php?id=<?php echo $id; ?>" class="btn-danger" style="background-color: #e74c3c; padding: 5px 10px; font-size: 0.8rem; border-radius: 3px; text-decoration: none; color: white;">Remove User</a>
-                                    </td>
-                                </tr>
-                                <?php
+                                $dorm = $rows['cust_dorm'] ?? 'Not Set';
+                                $contact = $rows['cust_contact_no'] ?? 'N/A';
+                                $bank = $rows['bank_name'] ? $rows['bank_name']." (".$rows['bank_account'].")" : 'No Bank Info';
+                    ?>
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                        <td style="padding: 15px;"><?php echo $sn++; ?>.</td>
+                        <td style="padding: 15px; font-weight: bold;"><?php echo $full_name; ?></td>
+                        <td style="padding: 15px;"><?php echo $dorm; ?></td>
+                        <td style="padding: 15px;"><?php echo $contact; ?></td>
+                        <td style="padding: 15px; font-size: 0.85rem; color: #a4b0be;"><?php echo $bank; ?></td>
+                        <td style="padding: 15px;">
+                            <?php if($is_admin): ?>
+                                <a href="delete-customer.php?id=<?php echo $id; ?>" class="btn-action" style="background: #ff4757; padding: 5px 10px; border-radius: 5px; color:white; text-decoration:none; font-size:0.8rem;">Remove</a>
+                            <?php else: ?>
+                                <span style="font-size: 0.8rem; color: #57606f;">View Only</span>
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+                    <?php 
                             }
                         } else {
-                            echo "<tr><td colspan='6' class='error'>No Customers Registered.</td></tr>";
+                            echo "<tr><td colspan='6' style='padding:20px; text-align:center;'>No registered customers found.</td></tr>";
                         }
-                    }
-                ?>
-            </tbody>
-        </table>
+                    ?>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
