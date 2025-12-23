@@ -66,6 +66,5 @@ git clone https://github.com/liyanawr/mcos.git
 3. **Run**:
 Visit `http://localhost/mcos/` in your browser.
 
-# Latest update/issue (current date: 12/12/2025)
-- added cart mechanism
+# Latest update/issue (current date: 23/12/2025)
 - incomplete database (data and images/illustrations)
